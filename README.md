@@ -26,4 +26,4 @@ If you are not using it you can do as following:
 
 npm -v     
 nvm use 22.2.0   
-# mazing_demo
+

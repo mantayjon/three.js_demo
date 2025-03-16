@@ -1,5 +1,5 @@
 body {
-    background-color: gray;
+    background-color: #101677;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,6 +14,8 @@ h1 {
     font-weight: bold;
     color: white;
     z-index: 10; /* Ensure the heading is above the scene */
+    font-family: Arial, Helvetica, sans-serif;
+    color: #e4693d;
 }
 
 #scene-container {
@@ -23,4 +25,28 @@ h1 {
     justify-content: center;
     align-items: center;
     position: relative;
+    border-radius: 20px;
+    overflow: hidden; 
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); 
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+#background-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.bg-btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #e4693d;
+}
+
+.bg-btn:hover {
+    opacity: 0.8;
 }
