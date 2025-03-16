@@ -1,16 +1,24 @@
-import { Color, Scene, SphereGeometry, TextureLoader, MeshBasicMaterial, Mesh } from 'three';
+/**
+ * 3D Model by Artec Group Inc. (www.artec3d.com)
+ * Licensed under Creative Commons Attribution 3.0 (CC BY 3.0)
+ * License: http://creativecommons.org/licenses/by/3.0/
+ */
+
+import { Color, Scene, SphereGeometry, TextureLoader, MeshBasicMaterial, MeshStandardMaterial, Mesh, MathUtils } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 
 function createScene() {
+
     const scene = new Scene();
+
     const geometry = new SphereGeometry(5, 60, 60);
-    geometry.scale(-1, 1, 1); // Flip inside out for skybox
+    geometry.scale(-1, 1, 1); // Flip inside out
 
     const loader = new TextureLoader();
-    const material = new MeshBasicMaterial({ map: loader.load("/background/sky.jpg") }); // Default texture
-
-    const sphere = new Mesh(geometry, material);
+    const material_sphere = new MeshBasicMaterial({ map: loader.load("/background/sky.jpg") });
+    
+    const sphere = new Mesh(geometry, material_sphere);
     sphere.scale.set(10, 10, 10);
     sphere.position.set(0, 0, 0);
     scene.add(sphere);
@@ -18,28 +26,62 @@ function createScene() {
     scene.background = new Color('gray');
 
     const objLoader = new OBJLoader();
-    objLoader.load('/models/Jonas.obj', (object) => {
-        object.position.set(0, 0, 15);
-        object.scale.set(30, 30, 30);
-        scene.add(object);
-    });
 
-    /*const gltfLoader = new GLTFLoader();
-    gltfLoader.load('/models/JonasTextures.glb', (gltf) => {
-        const model = gltf.scene;
-        model.position.set(0, 0, 15);
-        model.scale.set(30, 30, 30);
-        scene.add(model);
-    });*/
+    const loadingIndicator = document.getElementById('loadingIndicator');
+   
+
+    function loadModel(objPath, mtlPath) {
+        loadingIndicator.style.display = "block"; 
+      
+        scene.children.forEach((child) => {
+            if (child.name === "LoadedModel") {
+                scene.remove(child);
+            }
+        });
+
+        if (mtlPath) {
+            const mtlLoader = new MTLLoader();
+            mtlLoader.load(mtlPath, (materials) => {
+                materials.preload();
+                objLoader.setMaterials(materials);
+                objLoader.load(objPath, (object) => {
+                    object.position.set(0, 0, 0);
+                    object.scale.set(0.01, 0.01, 0.01);
+                    object.rotation.z = MathUtils.degToRad(-3);
+                    object.rotation.x = MathUtils.degToRad(-10);
+                    object.name = "LoadedModel";
+                    scene.add(object);
+                    loadingIndicator.style.display = "none";
+                });
+            });
+        } else {
+            objLoader.load(objPath, (object) => {
+                object.traverse((child) => {
+                    if (child instanceof Mesh) {
+                        const material = new MeshStandardMaterial({
+                            vertexColors: true,
+                            flatShading: true
+                        });
+                        child.material = material;
+                    }
+                });
+                object.position.set(0, 0, 5);
+                object.scale.set(10, 10, 10);
+                object.name = "LoadedModel";
+                scene.add(object);
+                loadingIndicator.style.display = "none";
+            });
+        }
+    }
 
     function updateBackground(imagePath) {
         loader.load(imagePath, (newTexture) => {
-            material.map = newTexture;
-            material.needsUpdate = true; 
+            material_sphere.map = newTexture;
+            material_sphere.needsUpdate = true;
         });
     }
-
-    return { scene, updateBackground }; 
+    
+    return { scene, updateBackground, loadModel };
 }
 
 export { createScene };

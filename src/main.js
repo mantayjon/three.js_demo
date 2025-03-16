@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let scene, camera, renderer, resizer;
     
     function init() {
-        const { scene: newScene, updateBackground } = createScene();
+        const { scene: newScene, updateBackground, updateObj, loadModel} = createScene();
         scene = newScene;
         camera = createCamera();
         renderer = createRenderer();
@@ -22,14 +22,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById('scene-container').appendChild(renderer.domElement);
 
+        loadModel('/models/chair/chair.obj', '/models/chair/chair.mtl');
+
         animate();
 
        
-        const buttons = document.querySelectorAll(".bg-btn");
-        buttons.forEach(button => {
-            button.addEventListener("click", () => {
-                const imageName = button.getAttribute("data-image");
+        const bgButtons = document.querySelectorAll(".bg-btn");
+        bgButtons.forEach(bgButtons => {
+            bgButtons.addEventListener("click", () => {
+                const imageName = bgButtons.getAttribute("data-image");
                 updateBackground(`/background/${imageName}`); // Change scene background
+            });
+        });
+
+        const objButtons = document.querySelectorAll(".obj-btn");
+        objButtons.forEach(objButton => {
+            objButton.addEventListener("click", () => {
+                const objName = objButton.getAttribute("data-obj");
+                const mtlName = objButton.getAttribute("data-mtl");
+                loadModel(`${objName}`, `${mtlName}`); // Change obj model
             });
         });
     }

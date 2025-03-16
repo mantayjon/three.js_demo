@@ -27,3 +27,10 @@ If you are not using it you can do as following:
 npm -v     
 nvm use 22.2.0   
 
+
+
+## Attribution
+This project includes a 3D model by **Artec Group Inc.**  
+Licensed under **Creative Commons Attribution 3.0 Unported (CC BY 3.0)**  
+[License Details](http://creativecommons.org/licenses/by/3.0/)  
+Original source: [www.artec3d.com](https://www.artec3d.com)  
