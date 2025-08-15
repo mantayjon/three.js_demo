@@ -1,4 +1,4 @@
-#Three.js demo
+# Three.js demo
 
 
 This project demonstrates Three.js
