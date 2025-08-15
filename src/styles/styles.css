@@ -1,21 +1,21 @@
 body {
-    background-color: #101677;
+    background-color: #3D4127;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    flex-direction: column; /* Stacks the heading and scene container */
-    position: relative; /* Required to make the child relative positioned */
+    flex-direction: column; 
+    position: relative; 
 }
 
 h1 {
     font-size: 2rem;
     font-weight: bold;
     color: white;
-    z-index: 10; /* Ensure the heading is above the scene */
+    z-index: 10;
     font-family: Arial, Helvetica, sans-serif;
-    color: #e4693d;
+    color: #BAC095;
 }
 
 #scene-container {
@@ -44,7 +44,7 @@ h1 {
     cursor: pointer;
     font-size: 1rem;
     border-radius: 5px;
-    background-color: #e4693d;
+    background-color:#BAC095;
 }
 
 .bg-btn:hover, .obj-btn:hover{

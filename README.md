@@ -3,7 +3,7 @@
 
 This project demonstrates Three.js
 
-It displays the a model of me floating in space.
+It displays the a model of me floating in space. 
 
 
 

@@ -65,8 +65,8 @@ function createScene() {
                         child.material = material;
                     }
                 });
-                object.position.set(0, 0, 5);
-                object.scale.set(10, 10, 10);
+                object.position.set(0, 0, 10);
+                object.scale.set(20, 20, 20);
                 object.name = "LoadedModel";
                 scene.add(object);
                 loadingIndicator.style.display = "none";
